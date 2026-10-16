@@ -1,0 +1,7 @@
+# Pliki wykonywane: LF takze po klonie na Windows / executed files keep LF after a Windows clone
+*.py   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+# PowerShell: CRLF (Windows PowerShell 5.1 i edytory Windows) / CRLF for PowerShell scripts
+*.ps1  text eol=crlf
+*.svg  text eol=lf

@@ -1,0 +1,5 @@
+# Lokalna konfiguracja i logi - nie do repo / local config and logs - never commit
+path_guard.config.json
+*.jsonl
+__pycache__/
+*.bak*

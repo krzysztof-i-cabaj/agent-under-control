@@ -1,0 +1,11 @@
+{
+  "workspaces": [
+    "D:/work",
+    "~/projects"
+  ],
+  "audit_log": "~/.claude/logs/path_guard_audit.jsonl",
+  "extra_hard_deny": [
+    "\\.aws[/\\\\]credentials",
+    "\\.kube[/\\\\]config"
+  ]
+}

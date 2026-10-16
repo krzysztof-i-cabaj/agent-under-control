@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-label="~/.claude — co jest w środku — i kiedy działa">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14304a"/><stop offset="1" stop-color="#0a1722"/></linearGradient></defs>
+<rect width="1280" height="820" rx="18" fill="url(#bg)"/>
+<text x="40" y="66" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="34" font-weight="700" fill="#f5a65b" text-anchor="start">~/.claude</text>
+<text x="232" y="64" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="400" fill="#9db2c2" text-anchor="start">co jest w środku — i kiedy działa</text>
+<rect x="40" y="96" width="720" height="74" rx="12" fill="#132b3d" stroke="#22394c" stroke-width="1.5"/>
+<text x="62" y="127" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#5ac8f5" text-anchor="start">CLAUDE.md</text>
+<text x="62" y="154" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">Twoje instrukcje i konwencje</text>
+<rect x="530" y="116" width="214" height="34" rx="17" fill="#0a1722" stroke="#5ac8f5" stroke-width="1.2"/>
+<text x="637.0" y="139" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#5ac8f5" text-anchor="middle">zawsze · start sesji</text>
+<rect x="40" y="178" width="720" height="74" rx="12" fill="#132b3d" stroke="#22394c" stroke-width="1.5"/>
+<text x="62" y="209" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#5ac8f5" text-anchor="start">rules/*.md</text>
+<text x="62" y="236" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">reguły dla typów plików (paths: w nagłówku)</text>
+<rect x="530" y="198" width="214" height="34" rx="17" fill="#0a1722" stroke="#5ac8f5" stroke-width="1.2"/>
+<text x="637.0" y="221" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#5ac8f5" text-anchor="middle">przy pasującym pliku</text>
+<rect x="40" y="260" width="720" height="74" rx="12" fill="#132b3d" stroke="#f5a65b" stroke-width="1.5"/>
+<text x="62" y="291" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#f5a65b" text-anchor="start">★ settings.json</text>
+<text x="62" y="318" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">uprawnienia allow · ask · deny + podpięcie hooków</text>
+<rect x="530" y="280" width="214" height="34" rx="17" fill="#0a1722" stroke="#f5a65b" stroke-width="1.2"/>
+<text x="637.0" y="303" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#f5a65b" text-anchor="middle">każde narzędzie</text>
+<rect x="40" y="342" width="720" height="74" rx="12" fill="#132b3d" stroke="#f5a65b" stroke-width="1.5"/>
+<text x="62" y="373" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#f5a65b" text-anchor="start">★ hooks/</text>
+<text x="62" y="400" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">Twoje skrypty uruchamiane na zdarzenia (PreToolUse …)</text>
+<rect x="530" y="362" width="214" height="34" rx="17" fill="#0a1722" stroke="#f5a65b" stroke-width="1.2"/>
+<text x="637.0" y="385" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#f5a65b" text-anchor="middle">przed każdym narzędziem</text>
+<rect x="40" y="424" width="720" height="74" rx="12" fill="#132b3d" stroke="#f5a65b" stroke-width="1.5"/>
+<text x="62" y="455" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#f5a65b" text-anchor="start">★ agents/</text>
+<text x="62" y="482" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">subagenci: własny kontekst, własne narzędzia</text>
+<rect x="530" y="444" width="214" height="34" rx="17" fill="#0a1722" stroke="#f5a65b" stroke-width="1.2"/>
+<text x="637.0" y="467" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#f5a65b" text-anchor="middle">gdy zlecisz zadanie</text>
+<rect x="40" y="506" width="720" height="74" rx="12" fill="#132b3d" stroke="#22394c" stroke-width="1.5"/>
+<text x="62" y="537" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#5ac8f5" text-anchor="start">skills/</text>
+<text x="62" y="564" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">spakowana wiedza; zawsze ładuje się tylko opis</text>
+<rect x="530" y="526" width="214" height="34" rx="17" fill="#0a1722" stroke="#5ac8f5" stroke-width="1.2"/>
+<text x="637.0" y="549" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#5ac8f5" text-anchor="middle">na żądanie</text>
+<rect x="40" y="588" width="720" height="74" rx="12" fill="#132b3d" stroke="#22394c" stroke-width="1.5"/>
+<text x="62" y="619" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#5ac8f5" text-anchor="start">projects/*/memory/</text>
+<text x="62" y="646" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">fakty, które przeżyją sesję</text>
+<rect x="530" y="608" width="214" height="34" rx="17" fill="#0a1722" stroke="#5ac8f5" stroke-width="1.2"/>
+<text x="637.0" y="631" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#5ac8f5" text-anchor="middle">kolejna sesja</text>
+<rect x="40" y="670" width="720" height="74" rx="12" fill="#132b3d" stroke="#22394c" stroke-width="1.5"/>
+<text x="62" y="701" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="20" font-weight="700" fill="#5ac8f5" text-anchor="start">plugins/ · mody</text>
+<text x="62" y="728" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">pakiety i rozszerzenia: komendy, UI, hooki, MCP</text>
+<rect x="530" y="690" width="214" height="34" rx="17" fill="#0a1722" stroke="#5ac8f5" stroke-width="1.2"/>
+<text x="637.0" y="713" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#5ac8f5" text-anchor="middle">gdy zainstalowane</text>
+<text x="800" y="122" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="15" font-weight="700" fill="#5ac8f5" text-anchor="start">JEDNO WYWOŁANIE NARZĘDZIA</text>
+<rect x="800" y="140" width="440" height="64" rx="12" fill="#132b3d" stroke="#22394c" stroke-width="1.5"/>
+<text x="1020.0" y="179" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="600" fill="#eef3f6" text-anchor="middle">Claude chce: Read / Edit / Bash …</text>
+<path d="M1020.0,204 C1020.0,226 906.0,222 906.0,246" fill="none" stroke="#9db2c2" stroke-width="2"/>
+<rect x="800.0" y="248" width="212.0" height="84" rx="12" fill="#132b3d" stroke="#f5a65b" stroke-width="1.5"/>
+<text x="906.0" y="282" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="16" font-weight="700" fill="#f5a65b" text-anchor="middle">★ settings.json</text>
+<text x="906.0" y="310" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="400" fill="#eef3f6" text-anchor="middle">reguły uprawnień</text>
+<path d="M1020.0,204 C1020.0,226 1134.0,222 1134.0,246" fill="none" stroke="#9db2c2" stroke-width="2"/>
+<rect x="1028.0" y="248" width="212.0" height="84" rx="12" fill="#132b3d" stroke="#f5a65b" stroke-width="1.5"/>
+<text x="1134.0" y="282" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="16" font-weight="700" fill="#f5a65b" text-anchor="middle">★ path_guard.py</text>
+<text x="1134.0" y="310" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="400" fill="#eef3f6" text-anchor="middle">PreToolUse hook</text>
+<path d="M1020.0,332 C1020.0,416 869.3333333333334,406 869.3333333333334,454" fill="none" stroke="#ff7a7a" stroke-width="2"/>
+<rect x="800.0" y="456" width="138.66666666666666" height="92" rx="12" fill="#0a1722" stroke="#ff7a7a" stroke-width="2"/>
+<text x="869.3333333333334" y="490" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="19" font-weight="700" fill="#ff7a7a" text-anchor="middle">deny</text>
+<text x="869.3333333333334" y="516" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="middle">plik z sekretami</text>
+<path d="M1020.0,332 C1020.0,416 1020.0,406 1020.0,454" fill="none" stroke="#f5c45b" stroke-width="2"/>
+<rect x="950.6666666666666" y="456" width="138.66666666666666" height="92" rx="12" fill="#0a1722" stroke="#f5c45b" stroke-width="2"/>
+<text x="1020.0" y="490" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="19" font-weight="700" fill="#f5c45b" text-anchor="middle">ask</text>
+<text x="1020.0" y="516" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="middle">poza katalogiem ·</text>
+<text x="1020.0" y="535" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="middle">usuwanie · .env</text>
+<path d="M1020.0,332 C1020.0,416 1170.6666666666665,406 1170.6666666666665,454" fill="none" stroke="#7bd88f" stroke-width="2"/>
+<rect x="1101.3333333333333" y="456" width="138.66666666666666" height="92" rx="12" fill="#0a1722" stroke="#7bd88f" stroke-width="2"/>
+<text x="1170.6666666666665" y="490" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="19" font-weight="700" fill="#7bd88f" text-anchor="middle">bez decyzji</text>
+<text x="1170.6666666666665" y="516" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="middle">zwykłe</text>
+<text x="1170.6666666666665" y="535" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="middle">uprawnienia</text>
+<rect x="800" y="588" width="440" height="162" rx="12" fill="#0a1722" stroke="#22394c" stroke-width="1.5"/>
+<text x="822" y="620" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">deny z reguł albo z hooka zatrzymuje</text>
+<text x="822" y="644" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">wywołanie</text>
+<text x="822" y="668" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start"></text>
+<text x="822" y="692" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">tryb auto potrafi sam zatwierdzić „ask” —</text>
+<text x="822" y="716" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">twardą blokadą jest tylko „deny”</text>
+<text x="40" y="790" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#f5a65b" text-anchor="start">★ zawarte w agent-under-control</text>
+<text x="1240" y="790" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="end">w projekcie ten sam wzór: &lt;projekt&gt;/CLAUDE.md · .claude/settings.json · .claude/rules/</text>
+</svg>

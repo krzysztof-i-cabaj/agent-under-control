@@ -1,0 +1,5 @@
+{
+  "workspaces": ["C:/auc-test-ws"],
+  "audit_log": "~/.claude/logs/path_guard_audit.test.jsonl",
+  "extra_hard_deny": ["\\.aws[/\\\\]credentials"]
+}

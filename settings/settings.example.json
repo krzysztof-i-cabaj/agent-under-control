@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(~/.ssh/id_*)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.gemini/oauth_creds.json)",
+      "Read(~/.config/gws/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/AppData/Roaming/DBeaverData/**/credentials-config.json)",
+      "Read(~/AppData/Roaming/pgAdmin/**)"
+    ],
+    "ask": [
+      "Read(**/.env)",
+      "Read(**/.env.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|Write|MultiEdit|NotebookEdit|Grep|Glob|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"__PYTHON__\" \"__HOOKS_DIR__/path_guard.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

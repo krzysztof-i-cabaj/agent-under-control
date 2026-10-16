@@ -1,0 +1,39 @@
+{
+  "_about": "Test cases: hook input -> expected decision (allow = no output). Workspace in tests: C:/auc-test-ws (see test.config.json). Paths do not need to exist.",
+  "path_guard": [
+    {"name": "Read inside workspace", "tool": "Read", "input": {"file_path": "C:/auc-test-ws/README.md"}, "expect": "allow"},
+    {"name": "Edit inside workspace", "tool": "Edit", "input": {"file_path": "C:/auc-test-ws/src/app.py"}, "expect": "allow"},
+    {"name": "Read outside workspace", "tool": "Read", "input": {"file_path": "C:/Windows/win.ini"}, "expect": "ask"},
+    {"name": "Grep outside workspace", "tool": "Grep", "input": {"pattern": "x", "path": "C:/other-project"}, "expect": "ask"},
+    {"name": "Bash git status inside", "tool": "Bash", "input": {"command": "git status"}, "expect": "allow"},
+    {"name": "Bash cat outside", "tool": "Bash", "input": {"command": "cat C:/Windows/win.ini"}, "expect": "ask"},
+    {"name": "Bash rm inside workspace", "tool": "Bash", "input": {"command": "rm build/old.log"}, "expect": "ask"},
+    {"name": "PowerShell Remove-Item", "tool": "PowerShell", "input": {"command": "Remove-Item .\\tmp -Recurse"}, "expect": "ask"},
+    {"name": ".env inside workspace", "tool": "Read", "input": {"file_path": "C:/auc-test-ws/.env"}, "expect": "ask"},
+    {"name": ".env.example is fine", "tool": "Read", "input": {"file_path": "C:/auc-test-ws/.env.example"}, "expect": "allow"},
+    {"name": "SSH private key via Bash", "tool": "Bash", "input": {"command": "cat ~/.ssh/id_ed25519"}, "expect": "deny"},
+    {"name": "SSH private key via PowerShell", "tool": "PowerShell", "input": {"command": "Get-Content $env:USERPROFILE\\.ssh\\id_rsa"}, "expect": "deny"},
+    {"name": "SSH public key is not a secret", "tool": "Bash", "input": {"command": "head -c 12 ~/.ssh/id_ed25519.pub"}, "expect": "ask"},
+    {"name": "Claude credentials via Read", "tool": "Read", "input": {"file_path": "~/.claude/.credentials.json"}, "expect": "deny"},
+    {"name": "Docker config via Bash", "tool": "Bash", "input": {"command": "cat ~/.docker/config.json"}, "expect": "deny"},
+    {"name": "pgAdmin dir via Grep", "tool": "Grep", "input": {"pattern": "x", "path": "~/AppData/Roaming/pgAdmin"}, "expect": "deny"},
+    {"name": "extra_hard_deny from config", "tool": "Bash", "input": {"command": "type C:\\Users\\me\\.aws\\credentials"}, "expect": "deny"},
+    {"name": "Computed profile path in inline code", "tool": "Bash", "input": {"command": "python -c \"from pathlib import Path; print(Path.home())\""}, "expect": "ask"},
+    {"name": "Claude Code memory dir is an exception", "tool": "Read", "input": {"file_path": "~/.claude/projects/x/memory/MEMORY.md"}, "expect": "allow"},
+    {"name": "Claude Code rules readable", "tool": "Read", "input": {"file_path": "~/.claude/rules/style.md"}, "expect": "allow"},
+    {"name": "Claude Code rules not writable", "tool": "Edit", "input": {"file_path": "~/.claude/rules/style.md"}, "expect": "ask"}
+  ],
+  "readonly_bash_guard": [
+    {"name": "git log", "command": "git log --oneline -5", "expect": "allow"},
+    {"name": "grep", "command": "grep -rn TODO docs", "expect": "allow"},
+    {"name": "git -C path log", "command": "git -C ../repo log -3", "expect": "allow"},
+    {"name": "redirect to file", "command": "git log > out.txt", "expect": "deny"},
+    {"name": "sed can write and execute", "command": "sed -n 1p README.md", "expect": "deny"},
+    {"name": "git grep -O runs a program", "command": "git grep -Ocalc foo", "expect": "deny"},
+    {"name": "git -c config", "command": "git -c core.pager=evil log", "expect": "deny"},
+    {"name": "command substitution", "command": "echo $(whoami)", "expect": "deny"},
+    {"name": "find -delete", "command": "find . -name '*.tmp' -delete", "expect": "deny"},
+    {"name": "git branch -D", "command": "git branch -D old", "expect": "deny"},
+    {"name": "not on allow list", "command": "python script.py", "expect": "deny"}
+  ]
+}
