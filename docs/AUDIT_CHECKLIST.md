@@ -10,7 +10,8 @@
 ## 🔐 1. Permissions and hooks
 
 - [ ] `settings.json` is valid JSON; no rule is both in `allow` and `deny`.
-- [ ] Secret files are in **`deny`**, not `ask` (auto mode can approve `ask` by itself).
+- [ ] Secret files are in **`deny`**, not `ask` (in auto mode, ordinary permission prompts are resolved by a classifier, not by you).
+- [ ] The hook log **grows** while the agent works (silence while it works = the hook is not running); `tools/split_report.py` shows no `ALARM`.
 - [ ] Secrets are also blocked **in shells**, not only for the Read tool (test: ask the agent to `cat` a test key).
 - [ ] Every hook `command` uses a **full path** to the interpreter; every script it calls exists.
 - [ ] Each hook has been run by hand with sample JSON on stdin — it returns the decision you expect.

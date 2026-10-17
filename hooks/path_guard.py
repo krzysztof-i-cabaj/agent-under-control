@@ -8,8 +8,9 @@
 #               files in every tool, including shells
 #
 # Autor:        KCB Kris
-# Data:         2026-10-16
-# Wersja:       2.0 (konfiguracja z pliku JSON zamiast sciezek w kodzie / JSON config)
+# Data:         2026-10-17
+# Wersja:       2.1 (linia w logu przy kazdym wywolaniu + tool_use_id/permission_mode / log every call;
+#               2.0: konfiguracja z pliku JSON zamiast sciezek w kodzie / JSON config)
 # Konwencje:    README.md (sekcja Configuration)
 #
 # Wymagania [PL]:    - Python 3.10+; Windows 10/11 (testowane na Windows 11)
@@ -24,7 +25,7 @@
 Zasady / Rules:
   0. Plik z sekretami (klucz SSH bez .pub, dane logowania Claude/Gemini/Docker/DBeaver/pgAdmin,
      + wzorce z extra_hard_deny) w DOWOLNYM narzedziu -> DENY.
-     Secret file in ANY tool -> DENY. (Auto mode can approve ASK on its own; only DENY is a hard stop.)
+     Secret file in ANY tool -> DENY. (Only DENY is a hard stop; see README: Who approves?)
   1. Sciezka poza katalogami roboczymi (workspaces, z podkatalogami) -> ASK.
      Path outside your workspaces (including subdirectories) -> ASK.
   2. Usuwanie plikow (rm, Remove-Item, del, git clean, ...) -> ASK, takze w katalogu roboczym.
@@ -38,17 +39,23 @@ Zasady / Rules:
      Anything else -> no decision (Claude Code's normal permission flow applies).
   Wyjatki: pamiec, plany i scratchpad samego Claude Code; Read z ~/.claude/rules.
   Blad hooka -> brak decyzji (fail-open), blad zapisany w logu. Hook error -> fail-open, logged.
+  Logi (2.1): audit_log - tylko ask/deny/bledy (jak dotad); events_log - linia przy KAZDYM wywolaniu
+  (pass/ask/deny) z tool_use_id i permission_mode; tam pisze tez decision_log.py. Cisza w events_log
+  przy pracujacym agencie = hook nie dziala (puls). events_log gets a line for every call (heartbeat).
 
 Konfiguracja / Configuration (JSON, pierwszy znaleziony plik / first file found):
   1. zmienna srodowiskowa / env var PATH_GUARD_CONFIG
   2. path_guard.config.json obok tego pliku / next to this file
   3. path_guard.config.json katalog wyzej (tam kladzie go install.ps1) / one level up (install.ps1 puts it there)
   4. ~/.claude/path_guard.config.json
-  Pola / fields: workspaces (lista katalogow), audit_log (plik .jsonl), extra_hard_deny (lista regex).
+  Pola / fields: workspaces (lista katalogow), audit_log (plik .jsonl), extra_hard_deny (lista regex),
+  events_log (plik .jsonl), log_all (domyslnie true: pisz events_log / default true),
+  pass_target_chars (domyslnie 120).
   Bez konfiguracji: katalogiem roboczym jest katalog projektu sesji (CLAUDE_PROJECT_DIR albo cwd),
-  log w ~/.claude/logs/path_guard_audit.jsonl.
+  logi w ~/.claude/logs/path_guard_audit.jsonl i path_guard_events.jsonl.
   Without config: the session's project directory is the only workspace.
 """
+import hashlib
 import json
 import os
 import re
@@ -77,6 +84,11 @@ def load_config():
 CONFIG = load_config()
 AUDIT_LOG = os.path.expanduser(CONFIG.get('audit_log')
                                or os.path.join('~', '.claude', 'logs', 'path_guard_audit.jsonl'))
+EVENTS_LOG = os.path.expanduser(CONFIG.get('events_log')
+                                or os.path.join('~', '.claude', 'logs', 'path_guard_events.jsonl'))
+VERSION = 'path_guard 2.1'
+LOG_ALL = CONFIG.get('log_all', True)
+PASS_CHARS = int(CONFIG.get('pass_target_chars', 120))
 
 # Wyjatki: katalogi robocze Claude Code / Claude Code's own working dirs
 EXCEPTIONS = [
@@ -379,13 +391,24 @@ def decide(data):
     return reasons, outside
 
 
-def log(entry):
+def log(entry, path=AUDIT_LOG):
     try:
-        os.makedirs(os.path.dirname(AUDIT_LOG), exist_ok=True)
-        with open(AUDIT_LOG, 'a', encoding='utf-8') as f:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'a', encoding='utf-8') as f:
             f.write(json.dumps(entry, ensure_ascii=False) + '\n')
     except OSError:
         pass
+
+
+def base_entry(data, decision):
+    """Wspolne pola linii logu / common log line fields (korelacja z decision_log.py)."""
+    ti = data.get('tool_input') or {}
+    target = ti.get('command') or ti.get('file_path') or ti.get('path') or ti.get('pattern') or ''
+    sha = hashlib.sha1(json.dumps(ti, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()[:12]
+    return {'ts': datetime.now().isoformat(timespec='milliseconds'), 'event': 'PreToolUse', 'hook': VERSION,
+            'session': data.get('session_id'), 'tool_use_id': data.get('tool_use_id'),
+            'mode': data.get('permission_mode'), 'tool': data.get('tool_name'), 'input_sha': sha,
+            'target': str(target)[:300 if decision != 'pass' else PASS_CHARS], 'decision': decision}
 
 
 def emit(decision, reason):
@@ -403,17 +426,21 @@ def main():
         hit = hard_deny(data)
         reasons, _ = ([], []) if hit else decide(data)
     except Exception as e:  # fail-open, ale z logiem / fail-open, logged
-        log({'ts': datetime.now().isoformat(timespec='seconds'), 'error': repr(e)})
+        err = {'ts': datetime.now().isoformat(timespec='milliseconds'), 'event': 'PreToolUse', 'hook': VERSION,
+               'error': repr(e)}
+        log(err)
+        log(err, EVENTS_LOG)
         return 0
     if not hit and not reasons:
+        if LOG_ALL:   # puls: kazde wywolanie zostawia slad / heartbeat: every call leaves a line
+            log(base_entry(data, 'pass'), EVENTS_LOG)
         return 0
-    ti = data.get('tool_input') or {}
     decision = 'deny' if hit else 'ask'
     why = ['plik z sekretami / secret file: ' + hit] if hit else reasons
-    log({'ts': datetime.now().isoformat(timespec='seconds'), 'session': data.get('session_id'),
-         'tool': data.get('tool_name'),
-         'target': (ti.get('command') or ti.get('file_path') or ti.get('path') or '')[:300],
-         'decision': decision, 'reasons': why})
+    entry = dict(base_entry(data, decision), reasons=why)
+    log(entry)
+    if LOG_ALL:
+        log(entry, EVENTS_LOG)
     emit(decision, '; '.join(why))
     return 0
 

@@ -10,8 +10,9 @@
 ## 🔐 1. Uprawnienia i hooki
 
 - [ ] `settings.json` to poprawny JSON; żadna reguła nie jest jednocześnie w `allow` i `deny`.
-- [ ] Pliki z sekretami są w **`deny`**, nie w `ask` (tryb auto potrafi sam zatwierdzić `ask`).
+- [ ] Pliki z sekretami są w **`deny`**, nie w `ask` (w trybie auto zwykłe prośby o zgodę rozstrzyga klasyfikator, nie Ty).
 - [ ] Sekrety są zablokowane także **w shellu**, nie tylko dla narzędzia Read (test: poproś agenta o `cat` testowego klucza).
+- [ ] Log hooka **rośnie** razem z pracą agenta (cisza przy pracującym agencie = hook nie działa); `tools/split_report.py` bez `ALARM`.
 - [ ] Każdy `command` hooka używa **pełnej ścieżki** do interpretera; każdy wołany skrypt istnieje.
 - [ ] Każdy hook uruchomiony ręcznie z przykładowym JSON-em na stdin zwraca oczekiwaną decyzję.
 - [ ] Hooki niepodpięte nigdzie (sieroty) są zarchiwizowane; stare `*.bak` nie leżą obok aktywnych plików.

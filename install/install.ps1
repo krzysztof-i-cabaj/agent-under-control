@@ -6,8 +6,8 @@
 #               directory: backup, file copy, settings.json merge (never overwrite)
 #
 # Autor:        KCB Kris
-# Data:         2026-10-16
-# Wersja:       1.0
+# Data:         2026-10-17
+# Wersja:       1.1 (decision_log.py + zdarzenia PermissionRequest/PermissionDenied/PostToolUse(Failure) / log-only hook events)
 # Konwencje:    README.md (sekcja Install - scripted)
 #
 # Wymagania [PL]:    - PowerShell 7+, Python 3.10+, Windows 10/11
@@ -51,6 +51,7 @@ Write-Host "Backup:     $Backup`n"
 $targets = @(
     (Join-Path $HooksDir 'path_guard.py'),
     (Join-Path $HooksDir 'readonly_bash_guard.py'),
+    (Join-Path $HooksDir 'decision_log.py'),
     (Join-Path $ClaudeDir 'agents/docs-auditor.md'),
     (Join-Path $ClaudeDir 'settings.json'),
     (Join-Path $ClaudeDir 'path_guard.config.json')
@@ -64,7 +65,7 @@ foreach ($t in $targets | Where-Object { Test-Path $_ }) {
 }
 
 # --- 3. Hooki i agent / hooks and agent ---
-foreach ($f in 'path_guard.py', 'readonly_bash_guard.py') {
+foreach ($f in 'path_guard.py', 'readonly_bash_guard.py', 'decision_log.py') {
     Step "copy    hooks/$f -> $HooksDir"
     if (-not $DryRun) {
         New-Item -ItemType Directory -Force $HooksDir | Out-Null
@@ -99,18 +100,19 @@ foreach ($kind in 'deny', 'ask') {
     }
     $settings.permissions[$kind] = $have
 }
-$hookCmd = "`"$PyFwd`" `"$HooksFwd/path_guard.py`""
 if (-not $settings.ContainsKey('hooks')) { $settings.hooks = @{} }
-$pre = @($settings.hooks['PreToolUse'] | Where-Object { $_ })
-$already = $pre | Where-Object { $_.hooks | Where-Object { $_.command -like '*path_guard.py*' } }
-if ($already) { Step 'keep    hooks.PreToolUse path_guard (already wired - check the python path by hand)' }
-else {
-    $entry = $example.hooks.PreToolUse[0]
-    $entry.hooks[0].command = $hookCmd
-    Step "add     hooks.PreToolUse -> $hookCmd"
-    $pre += $entry
+# Kazde zdarzenie z szablonu: dodaj, jesli ten skrypt nie jest jeszcze podpiety / add per event if script not wired
+foreach ($hookEvent in $example.hooks.Keys) {
+    $have = @($settings.hooks[$hookEvent] | Where-Object { $_ })
+    foreach ($entry in $example.hooks[$hookEvent]) {
+        $script = ([regex]::Match($entry.hooks[0].command, '[\w-]+\.py')).Value
+        $entry.hooks[0].command = $entry.hooks[0].command.Replace('__PYTHON__', $PyFwd).Replace('__HOOKS_DIR__', $HooksFwd)
+        $already = $have | Where-Object { $_.hooks | Where-Object { $_.command -like "*$script*" } }
+        if ($already) { Step "keep    hooks.$hookEvent $script (already wired - check the python path by hand)" }
+        else { Step "add     hooks.$hookEvent -> $($entry.hooks[0].command)"; $have += $entry }
+    }
+    $settings.hooks[$hookEvent] = $have
 }
-$settings.hooks['PreToolUse'] = $pre
 if (-not $DryRun) {
     $settings | ConvertTo-Json -Depth 20 | Set-Content -Encoding utf8NoBOM $settingsPath
     $null = Get-Content -Raw $settingsPath | ConvertFrom-Json   # weryfikacja: poprawny JSON / verify valid JSON

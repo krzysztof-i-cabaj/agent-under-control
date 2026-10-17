@@ -26,6 +26,58 @@
           }
         ]
       }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"__PYTHON__\" \"__HOOKS_DIR__/decision_log.py\"",
+            "async": true,
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PermissionDenied": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"__PYTHON__\" \"__HOOKS_DIR__/decision_log.py\"",
+            "async": true,
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"__PYTHON__\" \"__HOOKS_DIR__/decision_log.py\"",
+            "async": true,
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"__PYTHON__\" \"__HOOKS_DIR__/decision_log.py\"",
+            "async": true,
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }
