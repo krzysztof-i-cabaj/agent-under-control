@@ -3,7 +3,7 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-hooki_%2B_agent-D97757)]()
 [![Platforma](https://img.shields.io/badge/Windows_11-testowane-0078D6)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]()
-[![Testy](https://img.shields.io/badge/Testy-38%2F38-success)](tests/cases.json)
+[![Testy](https://img.shields.io/badge/Testy-47%2F47-success)](tests/cases.json)
 [![Ścieżki](https://img.shields.io/badge/Instalacja-skryptem_%7C_r%C4%99cznie-blueviolet)]()
 [![Licencja](https://img.shields.io/badge/Licencja-MIT-F1C40F)](LICENSE)
 
@@ -17,8 +17,9 @@
 Claude Code ma dobry system uprawnień. W praktyce i tak przeciekają trzy rzeczy:
 
 1. **W trybie auto `ask` nie zawsze trafia do Ciebie.** Zwykłe prośby o zgodę rozstrzyga klasyfikator trybu auto i oczywiste
-   zatwierdza sam. Twardą blokadą jest tylko `deny`. (Według dokumentacji `ask` zwrócone przez *hook* i tak trafia do człowieka;
-   `decision_log.py` pozwala zmierzyć, kto naprawdę odpowiedział.)
+   zatwierdza sam. Twardą blokadą jest tylko `deny`. `ask` zwrócone przez *hook* trafia do człowieka, także w trybie auto:
+   tak mówi dokumentacja i tak wyszło w moim pomiarze `decision_log.py` (17–18.10.2026), gdzie żadne `ask` z hooka nie przeszło
+   bez okienka. Czyli: `ask` z hooka to „zapytaj mnie”, a `deny` to „nigdy”.
 2. **`deny Read(...)` to reguła dla narzędzia Read.** Dla polecenia w shellu, np. `cat ~/.ssh/id_ed25519`, nie można
    na niej polegać — dlatego hook sprawdza sam tekst polecenia.
 3. **Hook, który się nie uruchomi, znika po cichu.** Hook wołany gołym `python` przestaje działać po zmianie PATH
@@ -39,7 +40,7 @@ Powstało z audytu działającej konfiguracji (praca DBA Oracle/PostgreSQL i pro
 | [`hooks/readonly_bash_guard.py`](hooks/readonly_bash_guard.py) | biała lista dla Bash: tylko polecenia do odczytu (`git log/show/diff`, `grep`, `cat`…) |
 | [`agents/docs-auditor.md`](agents/docs-auditor.md) | subagent (po angielsku) sprawdzający, czy dokumentacja zgadza się z kodem; jego Bash pilnuje hook wyżej |
 | [`settings/settings.example.json`](settings/settings.example.json) | reguły `deny` / `ask` i podpięcie hooków (z pełną ścieżką Pythona) |
-| [`tests/`](tests) | 38 testów: wejście hooka → oczekiwana decyzja, logi i raport; działa bez Claude Code |
+| [`tests/`](tests) | 47 testów: wejście hooka → oczekiwana decyzja, logi i raport; działa bez Claude Code |
 | [`install/install.ps1`](install/install.ps1) | instalator z `-DryRun`, kopią zapasową i scaleniem `settings.json` bez nadpisywania |
 | [`docs/AUDIT_CHECKLIST_PL.md`](docs/AUDIT_CHECKLIST_PL.md) | jak przejrzeć własną konfigurację Claude Code |
 
@@ -112,7 +113,7 @@ Inny katalog Claude: `-ClaudeDir D:\inny\.claude`.
 4. Otwórz `%USERPROFILE%\.claude\settings.json` i dodaj z `settings/settings.example.json`: brakujące reguły `deny` i `ask`
    oraz wpisy `hooks` — `PreToolUse` (path_guard) i `PermissionRequest`, `PermissionDenied`, `PostToolUse`, `PostToolUseFailure`
    (decision_log) — w `command` te same dwie zamiany. Pozostałe ustawienia zostaw.
-5. Sprawdź: `python tests/run_tests.py` → `38/38 passed`. Uruchom nową sesję Claude Code.
+5. Sprawdź: `python tests/run_tests.py` → `47/47 passed`. Uruchom nową sesję Claude Code.
 
 ## ⚙️ Konfiguracja
 

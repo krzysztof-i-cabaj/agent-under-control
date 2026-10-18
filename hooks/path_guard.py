@@ -8,8 +8,10 @@
 #               files in every tool, including shells
 #
 # Autor:        KCB Kris
-# Data:         2026-10-17
-# Wersja:       2.1 (linia w logu przy kazdym wywolaniu + tool_use_id/permission_mode / log every call;
+# Data:         2026-10-18
+# Wersja:       2.2 (klucz SSH: ${HOME}, %USERPROFILE%, /c/Users (Git Bash), /mnt/c/Users, cd ~/.ssh && cat id_*
+#               / more SSH key spellings);
+#               2.1 (linia w logu przy kazdym wywolaniu + tool_use_id/permission_mode / log every call;
 #               2.0: konfiguracja z pliku JSON zamiast sciezek w kodzie / JSON config)
 # Konwencje:    README.md (sekcja Configuration)
 #
@@ -86,7 +88,7 @@ AUDIT_LOG = os.path.expanduser(CONFIG.get('audit_log')
                                or os.path.join('~', '.claude', 'logs', 'path_guard_audit.jsonl'))
 EVENTS_LOG = os.path.expanduser(CONFIG.get('events_log')
                                 or os.path.join('~', '.claude', 'logs', 'path_guard_events.jsonl'))
-VERSION = 'path_guard 2.1'
+VERSION = 'path_guard 2.2'
 LOG_ALL = CONFIG.get('log_all', True)
 PASS_CHARS = int(CONFIG.get('pass_target_chars', 120))
 
@@ -104,7 +106,10 @@ READ_EXCEPTIONS = [
 
 # Twardy DENY: pliki z sekretami - kazde narzedzie / hard DENY: secret files - any tool
 HARD_DENY = [re.compile(r, re.I) for r in (
-    r'(^|[\s"\'=/\\])(~|\$home|\$env:userprofile|c:[/\\]users[/\\][^/\\]+)[/\\]\.ssh[/\\]id_[^\s"\';|&]*(?<!\.pub)(?=$|[\s"\';|&])',
+    r'(^|[\s"\'=/\\])(~|\$home|\$\{home\}|\$env:userprofile|%userprofile%|c:[/\\]users[/\\][^/\\]+'
+    r'|(?:/mnt)?/[a-z]/users/[^/\\]+)[/\\]\.ssh[/\\]id_[^\s"\';|&]*(?<!\.pub)(?=$|[\s"\';|&])',
+    # cd ~/.ssh && cat id_ed25519: katalog .ssh i nazwa klucza osobno / .ssh dir and key name split
+    r'(?:^|[\s"\'=/\\])\.ssh(?=$|[\s"\';|&/\\])[\s\S]*?(?:^|[\s"\'=;&|(])id_[^\s"\';|&/\\]*(?<!\.pub)(?=$|[\s"\';|&)])',
     r'\.claude[/\\]\.credentials\.json',
     r'\.gemini[/\\]oauth_creds\.json',
     r'\.config[/\\]gws[/\\]',

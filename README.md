@@ -3,7 +3,7 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_agent-D97757)]()
 [![Platform](https://img.shields.io/badge/Windows_11-tested-0078D6)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]()
-[![Tests](https://img.shields.io/badge/Tests-38%2F38-success)](tests/cases.json)
+[![Tests](https://img.shields.io/badge/Tests-47%2F47-success)](tests/cases.json)
 [![Paths](https://img.shields.io/badge/Install-scripted_%7C_manual-blueviolet)]()
 [![License](https://img.shields.io/badge/License-MIT-F1C40F)](LICENSE)
 
@@ -17,8 +17,9 @@
 Claude Code has a good permission system. Three things in practice still slip through:
 
 1. **In auto mode, `ask` does not always reach you.** Ordinary permission prompts are resolved by the auto-mode classifier,
-   which approves obvious ones itself. Only `deny` is a hard stop. (Per the docs, an `ask` returned by a *hook* still goes
-   to a human; `decision_log.py` lets you measure who really answered.)
+   which approves obvious ones itself. Only `deny` is a hard stop. An `ask` returned by a *hook* does go to a human, even
+   in auto mode — the docs say so, and my own measurement with `decision_log.py` (17–18 Oct 2026) found no hook `ask`
+   resolved without a prompt. So: hook `ask` for "check with me", `deny` for "never".
 2. **`deny Read(...)` is a rule for the Read tool.** For a shell command such as `cat ~/.ssh/id_ed25519` it is not
    something you can count on — so the hook checks the command text itself.
 3. **A hook that cannot start disappears silently.** A hook called as plain `python` stops working after a PATH change
@@ -39,7 +40,7 @@ It comes from a real audit of a working setup (Oracle/PostgreSQL DBA work and vi
 | [`hooks/readonly_bash_guard.py`](hooks/readonly_bash_guard.py) | allow-list for Bash: only read-only commands (`git log/show/diff`, `grep`, `cat`…) |
 | [`agents/docs-auditor.md`](agents/docs-auditor.md) | sub-agent that checks whether docs still match the code; its Bash is locked by the guard above |
 | [`settings/settings.example.json`](settings/settings.example.json) | `deny` / `ask` rules and the hooks wiring (with a full Python path) |
-| [`tests/`](tests) | 38 tests: hook input → expected decision, logs and report; runs without Claude Code |
+| [`tests/`](tests) | 47 tests: hook input → expected decision, logs and report; runs without Claude Code |
 | [`install/install.ps1`](install/install.ps1) | installer with `-DryRun`, backup and a non-destructive `settings.json` merge |
 | [`docs/AUDIT_CHECKLIST.md`](docs/AUDIT_CHECKLIST.md) | how to review your own Claude Code setup |
 
@@ -111,7 +112,7 @@ Another Claude directory: `-ClaudeDir D:\other\.claude`.
 4. Open `%USERPROFILE%\.claude\settings.json` and add from `settings/settings.example.json`: the `deny` and `ask` rules
    you do not have yet, and the `hooks` entries — `PreToolUse` (path_guard) plus `PermissionRequest`, `PermissionDenied`,
    `PostToolUse`, `PostToolUseFailure` (decision_log) — with the same two replacements in `command`. Keep your other settings.
-5. Check: `python tests/run_tests.py` → `38/38 passed`. Start a new Claude Code session.
+5. Check: `python tests/run_tests.py` → `47/47 passed`. Start a new Claude Code session.
 
 ## ⚙️ Configuration
 

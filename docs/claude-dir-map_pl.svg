@@ -72,7 +72,7 @@
 <text x="822" y="620" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">deny z reguł albo z hooka zatrzymuje</text>
 <text x="822" y="644" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">wywołanie</text>
 <text x="822" y="668" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start"></text>
-<text x="822" y="692" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">tryb auto potrafi sam zatwierdzić „ask” —</text>
+<text x="822" y="692" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">„ask” z hooka pyta człowieka, także w auto —</text>
 <text x="822" y="716" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">twardą blokadą jest tylko „deny”</text>
 <text x="40" y="790" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#f5a65b" text-anchor="start">★ zawarte w agent-under-control</text>
 <text x="1240" y="790" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="end">w projekcie ten sam wzór: &lt;projekt&gt;/CLAUDE.md · .claude/settings.json · .claude/rules/</text>

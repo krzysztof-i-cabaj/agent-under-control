@@ -71,8 +71,8 @@
 <rect x="800" y="588" width="440" height="162" rx="12" fill="#0a1722" stroke="#22394c" stroke-width="1.5"/>
 <text x="822" y="620" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start">deny from rules or a hook stops the call</text>
 <text x="822" y="644" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#eef3f6" text-anchor="start"></text>
-<text x="822" y="668" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">auto mode may approve “ask” by itself — only</text>
-<text x="822" y="692" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">“deny” is a hard stop</text>
+<text x="822" y="668" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">a hook “ask” goes to a human, even in auto —</text>
+<text x="822" y="692" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="400" fill="#f5c45b" text-anchor="start">only “deny” is a hard stop</text>
 <text x="40" y="790" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#f5a65b" text-anchor="start">★ included in agent-under-control</text>
 <text x="1240" y="790" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="14" font-weight="400" fill="#9db2c2" text-anchor="end">per project the same pattern: &lt;project&gt;/CLAUDE.md · .claude/settings.json · .claude/rules/</text>
 </svg>
