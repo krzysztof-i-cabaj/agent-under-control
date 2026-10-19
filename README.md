@@ -3,7 +3,7 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_agent-D97757)]()
 [![Platform](https://img.shields.io/badge/Windows_11-tested-0078D6)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]()
-[![Tests](https://img.shields.io/badge/Tests-47%2F47-success)](tests/cases.json)
+[![Tests](https://img.shields.io/badge/Tests-60%2F60-success)](tests/cases.json)
 [![Paths](https://img.shields.io/badge/Install-scripted_%7C_manual-blueviolet)]()
 [![License](https://img.shields.io/badge/License-MIT-F1C40F)](LICENSE)
 
@@ -40,7 +40,7 @@ It comes from a real audit of a working setup (Oracle/PostgreSQL DBA work and vi
 | [`hooks/readonly_bash_guard.py`](hooks/readonly_bash_guard.py) | allow-list for Bash: only read-only commands (`git log/show/diff`, `grep`, `cat`…) |
 | [`agents/docs-auditor.md`](agents/docs-auditor.md) | sub-agent that checks whether docs still match the code; its Bash is locked by the guard above |
 | [`settings/settings.example.json`](settings/settings.example.json) | `deny` / `ask` rules and the hooks wiring (with a full Python path) |
-| [`tests/`](tests) | 47 tests: hook input → expected decision, logs and report; runs without Claude Code |
+| [`tests/`](tests) | 60 tests: hook input → expected decision, logs and report; runs without Claude Code |
 | [`install/install.ps1`](install/install.ps1) | installer with `-DryRun`, backup and a non-destructive `settings.json` merge |
 | [`docs/AUDIT_CHECKLIST.md`](docs/AUDIT_CHECKLIST.md) | how to review your own Claude Code setup |
 
@@ -48,7 +48,7 @@ It comes from a real audit of a working setup (Oracle/PostgreSQL DBA work and vi
 
 | # | Situation | Decision |
 |---|---|---|
-| 0 | SSH private key (not `.pub`), Claude/Gemini/Docker/DBeaver/pgAdmin credentials, your `extra_hard_deny` patterns — in **any** tool | **deny** |
+| 0 | SSH private key (not `.pub`; also `/home/<user>`, `/root`, `ssh host cat …`, `scp host:…`), Claude/Gemini/Docker/DBeaver/pgAdmin credentials, your `extra_hard_deny` patterns — in **any** tool | **deny** |
 | 1 | a path outside your workspaces (Read, Edit, Grep, a path inside a shell command, a path inside a script being run) | **ask** |
 | 2 | file deletion (`rm`, `Remove-Item`, `del`, `git clean`, `git reset --hard`, `shutil.rmtree`…), also inside a workspace | **ask** |
 | 2a | `.env` files (templates such as `.env.example` are fine) | **ask** |
@@ -112,7 +112,7 @@ Another Claude directory: `-ClaudeDir D:\other\.claude`.
 4. Open `%USERPROFILE%\.claude\settings.json` and add from `settings/settings.example.json`: the `deny` and `ask` rules
    you do not have yet, and the `hooks` entries — `PreToolUse` (path_guard) plus `PermissionRequest`, `PermissionDenied`,
    `PostToolUse`, `PostToolUseFailure` (decision_log) — with the same two replacements in `command`. Keep your other settings.
-5. Check: `python tests/run_tests.py` → `47/47 passed`. Start a new Claude Code session.
+5. Check: `python tests/run_tests.py` → `60/60 passed`. Start a new Claude Code session.
 
 ## ⚙️ Configuration
 

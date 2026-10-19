@@ -3,7 +3,7 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-hooki_%2B_agent-D97757)]()
 [![Platforma](https://img.shields.io/badge/Windows_11-testowane-0078D6)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]()
-[![Testy](https://img.shields.io/badge/Testy-47%2F47-success)](tests/cases.json)
+[![Testy](https://img.shields.io/badge/Testy-60%2F60-success)](tests/cases.json)
 [![Ścieżki](https://img.shields.io/badge/Instalacja-skryptem_%7C_r%C4%99cznie-blueviolet)]()
 [![Licencja](https://img.shields.io/badge/Licencja-MIT-F1C40F)](LICENSE)
 
@@ -40,7 +40,7 @@ Powstało z audytu działającej konfiguracji (praca DBA Oracle/PostgreSQL i pro
 | [`hooks/readonly_bash_guard.py`](hooks/readonly_bash_guard.py) | biała lista dla Bash: tylko polecenia do odczytu (`git log/show/diff`, `grep`, `cat`…) |
 | [`agents/docs-auditor.md`](agents/docs-auditor.md) | subagent (po angielsku) sprawdzający, czy dokumentacja zgadza się z kodem; jego Bash pilnuje hook wyżej |
 | [`settings/settings.example.json`](settings/settings.example.json) | reguły `deny` / `ask` i podpięcie hooków (z pełną ścieżką Pythona) |
-| [`tests/`](tests) | 47 testów: wejście hooka → oczekiwana decyzja, logi i raport; działa bez Claude Code |
+| [`tests/`](tests) | 60 testów: wejście hooka → oczekiwana decyzja, logi i raport; działa bez Claude Code |
 | [`install/install.ps1`](install/install.ps1) | instalator z `-DryRun`, kopią zapasową i scaleniem `settings.json` bez nadpisywania |
 | [`docs/AUDIT_CHECKLIST_PL.md`](docs/AUDIT_CHECKLIST_PL.md) | jak przejrzeć własną konfigurację Claude Code |
 
@@ -48,7 +48,7 @@ Powstało z audytu działającej konfiguracji (praca DBA Oracle/PostgreSQL i pro
 
 | # | Sytuacja | Decyzja |
 |---|---|---|
-| 0 | prywatny klucz SSH (nie `.pub`), dane logowania Claude/Gemini/Docker/DBeaver/pgAdmin, Twoje wzorce `extra_hard_deny` — w **dowolnym** narzędziu | **deny** |
+| 0 | prywatny klucz SSH (nie `.pub`; także `/home/<user>`, `/root`, `ssh host cat …`, `scp host:…`), dane logowania Claude/Gemini/Docker/DBeaver/pgAdmin, Twoje wzorce `extra_hard_deny` — w **dowolnym** narzędziu | **deny** |
 | 1 | ścieżka poza katalogami roboczymi (Read, Edit, Grep, ścieżka w poleceniu shella, ścieżka w uruchamianym skrypcie) | **ask** |
 | 2 | usuwanie plików (`rm`, `Remove-Item`, `del`, `git clean`, `git reset --hard`, `shutil.rmtree`…), także w katalogu roboczym | **ask** |
 | 2a | pliki `.env` (szablony typu `.env.example` są w porządku) | **ask** |
@@ -113,7 +113,7 @@ Inny katalog Claude: `-ClaudeDir D:\inny\.claude`.
 4. Otwórz `%USERPROFILE%\.claude\settings.json` i dodaj z `settings/settings.example.json`: brakujące reguły `deny` i `ask`
    oraz wpisy `hooks` — `PreToolUse` (path_guard) i `PermissionRequest`, `PermissionDenied`, `PostToolUse`, `PostToolUseFailure`
    (decision_log) — w `command` te same dwie zamiany. Pozostałe ustawienia zostaw.
-5. Sprawdź: `python tests/run_tests.py` → `47/47 passed`. Uruchom nową sesję Claude Code.
+5. Sprawdź: `python tests/run_tests.py` → `60/60 passed`. Uruchom nową sesję Claude Code.
 
 ## ⚙️ Konfiguracja
 
