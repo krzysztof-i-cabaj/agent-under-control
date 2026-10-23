@@ -1,4 +1,4 @@
-# 🛡️ agent-under-control — hamulce dla Claude Code na Windows
+# 🛡️ agent-under-control — zabezpieczenia dla Claude Code na Windows
 
 [![Claude Code](https://img.shields.io/badge/Claude_Code-hooki_%2B_agent-D97757)]()
 [![Platforma](https://img.shields.io/badge/Windows_11-testowane-0078D6)]()
